@@ -20,7 +20,7 @@ import Categories from "views/Categories.js";
 import UserProfile from "views/UserProfile.js";
 import Upgrade from "views/Upgrade.js";
 import Order from "views/Order";
-
+ 
 const dashboardRoutes = [
   {
     path: "/welcome",
