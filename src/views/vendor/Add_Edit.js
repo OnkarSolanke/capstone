@@ -19,7 +19,7 @@ function Add_Edit() {
   const [lastName,setLastName] = useState("");
   const [mobile,setMobile] = useState("");
   const [email,setEmail] = useState("");
-
+console.log(API_URL);
   async function save() {
     let vedor = {firstName,lastName} ; 
     let result = await fetch(API_URL + "/api/vendor/store",{
