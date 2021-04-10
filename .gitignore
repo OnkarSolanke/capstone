@@ -27,4 +27,4 @@ package-lock.json
 
 
 #envirment
-.env
+.env*
