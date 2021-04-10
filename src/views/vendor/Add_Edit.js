@@ -1,4 +1,5 @@
 import React,{useState} from "react";
+import { API_URL } from 'config';
 
 // react-bootstrap components
 import {
@@ -21,7 +22,7 @@ function Add_Edit() {
 
   async function save() {
     let vedor = {firstName,lastName} ; 
-    let result = await fetch("http://localhost:8000/api/vendor/store",{
+    let result = await fetch(API_URL + "/api/vendor/store",{
       method : 'POST',
       headers : {
         "Content-Type" : "application/json",
