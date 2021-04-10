@@ -30,6 +30,9 @@ console.log(API_URL);
       },
       body : JSON.stringify(vedor),
     })
+    .then(response => response.json())
+    .then(data => setIbanResponse(data))
+    .catch(error => setIbanResponse(error));
     result = await result.json();
     console.log(result);
   }
