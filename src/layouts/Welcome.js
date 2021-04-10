@@ -58,7 +58,7 @@ function Welcome() {
       document.documentElement.classList.toggle("nav-open");
       var element = document.getElementById("bodyClick");
       element.parentNode.removeChild(element);
-    }
+    } 
   }, [location]);
   return (
     <>
