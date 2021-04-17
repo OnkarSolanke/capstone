@@ -1,27 +1,12 @@
-/*!
 
-=========================================================
-* Light Bootstrap Dashboard React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
-import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
 
 import routes from "../../routes/WelcomeRoutes";
+import AuthService from "services/AuthService";
 
-function Header({color}) {
+function Header({ color }) {
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -69,7 +54,7 @@ function Header({color}) {
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav mr-auto" navbar>
-           
+
             <Nav.Item>
               <Nav.Link
                 className="m-0"
@@ -82,24 +67,45 @@ function Header({color}) {
             </Nav.Item>
           </Nav>
           <Nav className="ml-auto" navbar>
-          <Nav.Item>
-              <Nav.Link
-                className="m-0"
-              >
-                <NavLink  to="welcome/register/vendor"> 
-                  <span className="no-icon">Registration</span>
-                </NavLink>
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="no-icon">Log In</span>
-              </Nav.Link>
-            </Nav.Item>
+            {
+              !AuthService.isLogedIn() ?
+                <>
+                  <Nav.Item>
+                    <Nav.Link
+                      className="m-0"
+                    >
+                      <NavLink to="/welcome/register/vendor">
+                        <span className="no-icon">Registration</span>
+                      </NavLink>
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      className="m-0"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <NavLink to="/login">
+                        <span className="no-icon">Log In</span>
+                      </NavLink>
+                    </Nav.Link>
+                  </Nav.Item>
+                </>
+                :
+                <>
+                  <Nav.Item>
+                    <Nav.Link
+                      className="m-0"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <NavLink to="/logout">
+                        <span className="no-icon">Log Out</span>
+                      </NavLink>
+                    </Nav.Link>
+                  </Nav.Item>
+                </>
+            }
           </Nav>
         </Navbar.Collapse>
       </Container>

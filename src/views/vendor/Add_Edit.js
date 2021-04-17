@@ -17,11 +17,12 @@ import {
 function Add_Edit() {
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
+  const [midleName,setMidleName] = useState("");
   const [mobile,setMobile] = useState("");
   const [email,setEmail] = useState("");
-console.log(API_URL);
+
   async function save() {
-    let vedor = {firstName,lastName} ; 
+    let vedor = {firstName,lastName,midleName,mobile,email} ; 
     let result = await fetch(API_URL + "/api/vendor/store",{
       method : 'POST',
       headers : {
@@ -29,8 +30,8 @@ console.log(API_URL);
         "Accept" : "application/json"
       },
       body : JSON.stringify(vedor),
-    })
-    .then(response => console.log(response.json()));
+    });
+    
     result = await result.json();
     console.log(result);
   }
@@ -82,7 +83,7 @@ console.log(API_URL);
                     </Col>
                   </Row> */}
                   <Row>
-                    <Col className="pr-1" md="6">
+                    <Col className="pr-1" md="4">
                       <Form.Group>
                         <label>First Name</label>
                         <Form.Control
@@ -94,7 +95,19 @@ console.log(API_URL);
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                    <Col className="pl-1" md="6">
+                    <Col className="pl-1" md="4">
+                      <Form.Group>
+                        <label>Midle Name</label>
+                        <Form.Control
+                          defaultValue="Andrew"
+                          placeholder="Midle Name"
+                          type="text"
+                          value={midleName}
+                          onChange = { (e) => setMidleName(e.target.value) }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pl-1" md="4">
                       <Form.Group>
                         <label>Last Name</label>
                         <Form.Control
@@ -103,6 +116,32 @@ console.log(API_URL);
                           type="text"
                           value={lastName}
                           onChange = { (e) => setLastName(e.target.value) }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Email</label>
+                        <Form.Control
+                          defaultValue="Mike"
+                          placeholder="Company"
+                          type="email"
+                          value={email}
+                          onChange = { (e) => setEmail(e.target.value) }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pl-1" md="6">
+                      <Form.Group>
+                        <label>Mobile</label>
+                        <Form.Control
+                          defaultValue="Andrew"
+                          placeholder="Midle Name"
+                          type="text"
+                          value={mobile}
+                          onChange = { (e) => setMobile(e.target.value) }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
