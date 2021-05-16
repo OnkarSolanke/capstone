@@ -17,13 +17,21 @@
 */
 import Index from "../views/welcome/index.js";
 import Add_Edit   from "views/vendor/Add_Edit";
+import Worker_Add_Edit  from "views/worker/Add_Edit";
+
 
 const dashboardRoutes = [
   {
     path: "/register/vendor",
-    name: "Vendor Register",
+    name: "Vendor Registretion",
     icon: "nc-icon nc-bank",
     component: Add_Edit,
+    layout: "/welcome",
+  },{
+    path: "/register/worker",
+    name: "worker Registretion",
+    icon: "nc-icon nc-bank",
+    component: Worker_Add_Edit,
     layout: "/welcome",
   },{
     path: "/",
@@ -31,7 +39,7 @@ const dashboardRoutes = [
     icon: "nc-icon nc-bank",
     component: Index,
     layout: "/welcome",
-  },
+  }
 ];
 
 

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
 
 import routes from "../../routes/WelcomeRoutes";
 import AuthService from "services/AuthService";
@@ -54,7 +54,6 @@ function Header({ color }) {
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="nav mr-auto" navbar>
-
             <Nav.Item>
               <Nav.Link
                 className="m-0"
@@ -71,17 +70,23 @@ function Header({ color }) {
               !AuthService.isLogedIn() ?
                 <>
                   <Nav.Item>
-                    <Nav.Link
-                      className="m-0"
-                    >
-                      <NavLink to="/welcome/register/vendor">
-                        <span className="no-icon">Registration</span>
-                      </NavLink>
-                    </Nav.Link>
+                    <NavDropdown class="" title="Registration" id="basic-nav-dropdown">
+                      <NavDropdown.Item>
+                        <NavLink to="/welcome/register/vendor">
+                          <span className="no-icon">As Vendor</span>
+                        </NavLink>
+                      </NavDropdown.Item>
+                      <NavDropdown.Item>
+                        <NavLink to="/welcome/register/worker">
+                          <span className="no-icon">As Worker</span>
+                        </NavLink>
+                      </NavDropdown.Item>
+                        
+                    </NavDropdown>
                   </Nav.Item>
                   <Nav.Item>
                     <Nav.Link
-                      className="m-0"
+                      className="mt-2"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                     >

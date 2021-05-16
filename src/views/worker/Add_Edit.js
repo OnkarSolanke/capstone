@@ -11,13 +11,12 @@ import {
   Col,
 } from "react-bootstrap";
 
-function Add_Edit() {
+function Worker_Add_Edit() {
   const [firstName,setFirstName] = useState("");
   const [lastName,setLastName] = useState("");
   const [midleName,setMidleName] = useState("");
   const [mobile,setMobile] = useState("");
   const [email,setEmail] = useState("");
-  const [adhar,setAdhar] = useState("");
 
   async function save() {
     let vedor = {firstName,lastName,midleName,mobile,email} ; 
@@ -38,9 +37,9 @@ function Add_Edit() {
       <Container fluid>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
-            <Card className="shadow p-3 mb-5 bg-white rounded">
+            <Card>
               <Card.Header>
-                <Card.Title as="h4">Vendor Registretion</Card.Title>
+                <Card.Title as="h4">Worker Registretion</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Form>
@@ -49,7 +48,7 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Company ()</label>
                         <Form.Control
-                          
+                          defaultValue="Creative Code Inc."
                           
                           placeholder="Company"
                           type="text"
@@ -60,7 +59,7 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Username</label>
                         <Form.Control
-                          
+                          defaultValue="michael23"
                           placeholder="Username"
                           type="text"
                           
@@ -83,9 +82,9 @@ function Add_Edit() {
                   <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
-                        <label class="font-weight-bold">First Name</label>
+                        <label>First Name</label>
                         <Form.Control
-                          
+                          defaultValue="Mike"
                           placeholder="Company"
                           type="text"
                           value={firstName}
@@ -95,8 +94,10 @@ function Add_Edit() {
                     </Col>
                     <Col className="pl-1" md="4">
                       <Form.Group>
-                        <Form.Label> Midle Name</Form.Label>
-                        <Form.Control border="none"
+                        <label>Midle Name</label>
+                        <Form.Control
+                          defaultValue="Andrew"
+                          placeholder="Midle Name"
                           type="text"
                           value={midleName}
                           onChange = { (e) => setMidleName(e.target.value) }
@@ -107,7 +108,7 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Last Name</label>
                         <Form.Control
-                          
+                          defaultValue="Andrew"
                           placeholder="Last Name"
                           type="text"
                           value={lastName}
@@ -121,7 +122,7 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Email</label>
                         <Form.Control
-                          
+                          defaultValue="Mike"
                           placeholder="Company"
                           type="email"
                           value={email}
@@ -133,7 +134,7 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Mobile</label>
                         <Form.Control
-                          
+                          defaultValue="Andrew"
                           placeholder="Midle Name"
                           type="text"
                           value={mobile}
@@ -142,33 +143,7 @@ function Add_Edit() {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>adhar</label>
-                        <Form.Control
-                          background="secondary"
-                          placeholder="Midle Name"
-                          type="text"
-                          value={adhar}
-                          onChange = { (e) => setAdhar(e.target.value) }
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <Form.Group>
-                        <label>Materials</label>
-                        <Form.Control
-                          
-                          placeholder="Midle Name"
-                          type="text"
-                          value={adhar}
-                          onChange = { (e) => setAdhar(e.target.value) }
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Card className="shadow p-3 mb-5 bg-white rounded">
+                  <Card>
                     <Card.Header>
                       <Card.Title as="h5">Permanent Address</Card.Title>
                     </Card.Header>
@@ -178,7 +153,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Address</label>
                           <Form.Control
-                            
+                            defaultValue=""
                             placeholder="Home Address"
                             type="text"
                             
@@ -191,7 +166,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>City</label>
                           <Form.Control
-                            
+                            defaultValue="Mike"
                             placeholder="City"
                             type="text"
                             
@@ -202,7 +177,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Country</label>
                           <Form.Control
-                            
+                            defaultValue="Andrew"
                             placeholder="Country"
                             type="text"
                             
@@ -221,7 +196,7 @@ function Add_Edit() {
                     </Row>
                     </Card.Body>
                   </Card>
-                  <Card className="shadow p-3 mb-5 bg-white rounded">
+                  <Card>
                     <Card.Header>
                       <Card.Title as="h5">Temporary Address</Card.Title>
                     </Card.Header>
@@ -234,7 +209,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Address</label>
                           <Form.Control
-                            
+                            defaultValue=""
                             placeholder="Home Address"
                             type="text"
                           ></Form.Control>
@@ -246,7 +221,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>City</label>
                           <Form.Control
-                            
+                            defaultValue="Mike"
                             placeholder="City"
                             type="text"
                             
@@ -257,7 +232,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Country</label>
                           <Form.Control
-                            
+                            defaultValue="Andrew"
                             placeholder="Country"
                             type="text"
                             
@@ -283,7 +258,7 @@ function Add_Edit() {
                         <label>About</label>
                         <Form.Control
                           cols="80"
-                          
+                          defaultValue=""
                           placeholder="Here can be your description"
                           rows="4"
                           as="textarea"
@@ -311,4 +286,4 @@ function Add_Edit() {
   );
 }
 
-export default Add_Edit;
+export default  Worker_Add_Edit;

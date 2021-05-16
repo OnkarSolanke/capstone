@@ -26,6 +26,7 @@ import routes from "../routes/WelcomeRoutes";
 // import sidebarImage from "assets/img/sidebar-3.jpg";
 
 function Welcome() {
+  console.log('hel0')
 //   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -62,7 +63,7 @@ function Welcome() {
   }, [location]);
   return (
     <>
-      <div className="wrapper" style={{ background: '#e0dfdc'}}>
+      <div style={{ background: '#e0dfdc'}}>
         {/* <Sidebar color={color} image={hasImage ? image : ""} routes={routes} /> */}
         <div className="panel panel-default" ref={mainPanel}>
           <WelcomeNavbar color={color} />

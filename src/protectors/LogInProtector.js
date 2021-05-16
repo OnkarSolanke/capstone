@@ -7,9 +7,9 @@ const LogInProtector = (props) => {
     const history = useHistory();
     console.log(AuthService.isLogedIn());
     useEffect(() => {
-        if(!AuthService.isLogedIn()){
-            history.push('/login');
-        }
+        // if(!AuthService.isLogedIn()){
+        //     history.push('/login');
+        // }
     }, [])
   return (
         <>
