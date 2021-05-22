@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { API_URL } from 'config';
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 // react-bootstrap components
 import {
@@ -18,6 +19,14 @@ function Worker_Add_Edit() {
   const [mobile,setMobile] = useState("");
   const [email,setEmail] = useState("");
   const [qualif,setQualif] = useState("");
+  const optionsArray = [
+    { key: "au", label: "Australia" },
+    { key: "ca", label: "Canada" },
+    { key: "us", label: "USA" },
+    { key: "pl", label: "Poland" },
+    { key: "es", label: "Spain" },
+    { key: "fr", label: "France" },
+  ];
 
   async function save() {
     let vedor = {firstName,lastName,midleName,mobile,email} ; 
@@ -95,7 +104,7 @@ function Worker_Add_Edit() {
                         type="text"
                         value={firstName}
                         onChange = { (e) => setFirstName(e.target.value) }
-                      ></Form.Control>
+                      ></Form.Control>     
                     </Form.Group>
                   </Col>
                   <Col className="pl-1" md="4">
@@ -147,6 +156,7 @@ function Worker_Add_Edit() {
                     </Form.Group>
                   </Col>
                 </Row>
+                <DropdownMultiselect options={optionsArray} name="countries" />
                 <Row>
                   <Col className="pl-1" md="6">
                     <Form.Group>
@@ -158,6 +168,7 @@ function Worker_Add_Edit() {
                         value={qualif}
                         onChange = { (e) => setQualif(e.target.value) }
                       ></Form.Control>
+
                     </Form.Group>
                   </Col>
                   <Col className="pl-1" md="6">

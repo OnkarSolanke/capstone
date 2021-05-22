@@ -241,8 +241,6 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Address</label>
                           <Form.Control
-                            
-                            
                             type="text"
                           ></Form.Control>
                         </Form.Group>
@@ -290,11 +288,8 @@ function Add_Edit() {
                         <label>About</label>
                         <Form.Control
                           cols="80"
-                          
-                          
                           rows="4"
                           as="textarea"
-                          
                         ></Form.Control>
                       </Form.Group>
                     </Col>

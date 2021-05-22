@@ -15,6 +15,7 @@ import Welcome from "./layouts/Welcome";
 import Default from "./layouts/Default";
 import AdminLayout from "./layouts/Admin.js";
 import LogInProtector from './protectors/LogInProtector';
+import Vendor from 'layouts/Vendor';
 
 
 ReactDOM.render(
@@ -23,6 +24,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" render={(props) => <LogInProtector comp = {AdminLayout} />} />
       <Route path="/welcome" render={(props) => <Welcome {...props} />} />
+      <Route path="/vendor" render={(props) => <Vendor {...props} />} />
       <Route path="/" render={(props) => <Default {...props} />} />
       <Redirect from="/" to="/login" />
     </Switch>
