@@ -22,13 +22,13 @@ import Worker_Add_Edit  from "views/worker/Add_Edit";
 const dashboardRoutes = [
   {
     path: "/register/vendor",
-    name: "Vendor Registretion",
+    name: "Vendor Registration",
     icon: "nc-icon nc-bank",
     component: Add_Edit,
     layout: "/welcome",
   },{
     path: "/register/worker",
-    name: "worker Registretion",
+    name: "worker Registration",
     icon: "nc-icon nc-bank",
     component: Worker_Add_Edit,
     layout: "/welcome",
