@@ -1,5 +1,6 @@
 import LogOutProtector from "protectors/LogOutProtector";
 import LoginForm  from "views/auth/LoginForm";
+import Search from "views/search.js";
 
 const DefaultRoutes = [
   {
@@ -9,6 +10,12 @@ const DefaultRoutes = [
     component: LoginForm,
     layout: "/Default",
     protection : LogOutProtector
+  },{
+    path: "/search",
+    name: "Index",
+    icon: "nc-icon nc-bank",
+    component: Search,
+    layout: "/Default",
   }
 ];
 

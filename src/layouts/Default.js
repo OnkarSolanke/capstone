@@ -51,7 +51,7 @@ function Default() {
   }, [location]);
   return (
     <>
-      <div className="wrapper" style={{ background: '#e0dfdc' }}>
+      <div  style={{ background: '#e0dfdc' }}>
         {/* <Sidebar color={color} image={hasImage ? image : ""} routes={routes} /> */}
         <div className="panel panel-default" ref={mainPanel}>
           <WelcomeNavbar color={color} />

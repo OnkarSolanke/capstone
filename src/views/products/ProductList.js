@@ -9,8 +9,8 @@ import {
   Button,
   Row,
   Col,
-  Image,
-  Figure,
+  DropdownButton,
+  Dropdown,
 } from "react-bootstrap";
 import AddNew from "./AddNew";
 
@@ -23,25 +23,36 @@ function ProductList() {
   const data = [
     {
       id : 1,
-      name : 'Onkar solanke',
-      first_name : 'Onkar',
-      middle_name : 'Kalyanrao',
-      last_name : 'Solanke',
-      adhar : '987654321654',
-      email : 'o.solanke@gmaill.com',
-      materials : 'Cement',
-      mobile : '9595979549',
-      about : 'Demo',
-      city : 'Jalna',
-      status :  'Active',
-    },{
-      id: 2,
-      name : 'Vishal solanke',
-      email : 'o.solanke@gmaill.com',
-      mobile : '9595979549',
-      city : 'Pune',
-      status :  'In-active',
-    },
+      name : 'cement',
+      price : '150/kg',
+      available : '251 KG',
+      disc : 'Grade 4',
+    }, {
+      id : 2,
+      name : 'Steel',
+      price : '120/kg',
+      available : '254 KG',
+      disc : '4 % carbon',
+    }, {
+      id : 3,
+      name : 'Bricks',
+      price : '7/Qty',
+      available : '6658 Qty',
+      disc : '4 inch',
+    }, {
+      id : 4,
+      name : 'RMC',
+      price : '150/kg',
+      available : '251 KG',
+      disc : ' ',
+    }, {
+      id : 5,
+      name : 'Tiles',
+      price : '75/Qty',
+      available : '251 Qty',
+      disc : ' white',
+    }
+    
   ];
 
   const columns = [
@@ -99,16 +110,15 @@ function ProductList() {
               </Row>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover">
+                <Table className="table-hover table-bordered">
                   <thead>
                     <tr>
                       <th>Sr.</th>
                       <th>Name</th>
                       <th>Price</th>
                       <th>Availeble</th>
-                      <th>City/Area</th>
-                      <th>Status</th>
-                      <th>action</th>
+                      <th width="500" >Description</th>
+                      <th width="150">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,22 +126,16 @@ function ProductList() {
                       data.map(e => {
                         return <>
                            <tr>
-                            <td>1</td>
+                            <td>{e.id}</td>
                             <td>{e.name}</td>
-                            <td>{ e.email }</td>
-                            <td> { e.mobile }</td>
-                            <td>{ e.city }</td>
+                            <td>{ e.price }</td>
+                            <td> { e.available }</td>
+                            <td>{ e.disc }</td>
                             <td>
-                              <Button
-                                className="btn-fill "
-                                variant = { e.status == 'Active' ? 'success' : 'info' }
-                             
-                              >
-                               {e.status}
-                              </Button>
-                            </td>
-                            <td>
-
+                              <DropdownButton  variant="Info" id="dropdown-item-button" title="Action">
+                                <Dropdown.Item as="button">Edit</Dropdown.Item>
+                                <Dropdown.Item as="button">Delete</Dropdown.Item>
+                              </DropdownButton>
                             </td>
                           </tr>
                         </>

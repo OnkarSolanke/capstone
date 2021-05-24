@@ -19,7 +19,6 @@ import Index from "../views/welcome/index.js";
 import Add_Edit   from "views/vendor/Add_Edit";
 import Worker_Add_Edit  from "views/worker/Add_Edit";
 
-
 const dashboardRoutes = [
   {
     path: "/register/vendor",
