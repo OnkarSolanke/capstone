@@ -8,8 +8,13 @@ import {
   Card,
   ListGroup,
   Form,
+  Tabs,
+  Tab,
 
 } from "react-bootstrap";
+import Labour from './categories/Labours';
+import Material from './categories/Materials';
+import Service from './categories/Services';
 
 function Search() {
   const  products =  [{
@@ -62,6 +67,17 @@ function Search() {
   return (
     <>
       <Container fluid>
+      <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" variant="pills">
+        <Tab eventKey="home" title="Labours">
+          <Labour/>
+        </Tab>
+        <Tab eventKey="profile" title="Materials">
+          <Material/>
+        </Tab>
+        <Tab eventKey="services" title="Services">
+          <Service/>
+        </Tab>
+        <Tab eventKey="search" title="Search All">
         <Row>
           <Col md={{ span: 3, offset: 5 }}>
             <Form.Control className="border rounded" type="email" border="round" />
@@ -115,6 +131,9 @@ function Search() {
           </Col>
         </Row>
         
+        </Tab>
+      </Tabs>
+
       </Container>
     </>
   );
