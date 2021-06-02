@@ -1,3 +1,4 @@
+import { API_URL } from 'config';
 import React, { useState } from 'react';
 // react-bootstrap components
 import {
@@ -27,7 +28,7 @@ function ProductCard({product}) {
                         width={300}
                         height={150}
                         alt="cement"
-                        src={product.img}
+                        src={ (product.avtar) ?  API_URL + '/storage/avatars/products/' + product.avtar : ''}
                     />
                     <Figure.Caption className="text-center">
                         {product.name}
@@ -48,7 +49,7 @@ function ProductCard({product}) {
                 <hr></hr>
                 <div className="stats">
                     <p className="font-weight-normal  text-center">
-                        Vendor :  {product.vendor.name}
+                        Vendor :  { (product.vendor) ? product.vendor.name : ''}
                     </p>
                 </div>
             </Card.Footer>

@@ -10,6 +10,7 @@ import Upgrade from "views/Upgrade.js";
 import VendorList from "views/vendor/VendorList";
 import Underdevlopment from 'views/Underdevlopment';
 import WorkerList from "views/worker/WorkerList";
+import ProductList from "views/products/ProductList";
 
 const dashboardRoutes = [
   {
@@ -30,7 +31,13 @@ const dashboardRoutes = [
     icon: "nc-icon nc-notes",
     component: WorkerList,
     layout: "/admin",
-  },
+  },{
+    path: "/register/vendor",
+    name: "Products",
+    icon: "nc-icon nc-bank",
+    component: ProductList,
+    layout: "/vendor",
+  }
   // {
   //   path: "/user",
   //   name: "User Profile",

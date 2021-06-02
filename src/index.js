@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -1,6 +1,6 @@
 import React from "react";
+import { API_URL } from 'config';
 
-// react-bootstrap components
 import {
   Card,
   Table,
@@ -19,65 +19,22 @@ function ProductList() {
   const [showModal, setShowModal] = React.useState(false);
   const [showVendorDetailsModal, setshowVendorDetailsModal] = React.useState(false);
   const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
 
-  const data = [
-    {
-      id : 1,
-      name : 'cement',
-      price : '150/kg',
-      available : '251 KG',
-      disc : 'Grade 4',
-    }, {
-      id : 2,
-      name : 'Steel',
-      price : '120/kg',
-      available : '254 KG',
-      disc : '4 % carbon',
-    }, {
-      id : 3,
-      name : 'Bricks',
-      price : '7/Qty',
-      available : '6658 Qty',
-      disc : '4 inch',
-    }, {
-      id : 4,
-      name : 'RMC',
-      price : '150/kg',
-      available : '251 KG',
-      disc : ' ',
-    }, {
-      id : 5,
-      name : 'Tiles',
-      price : '75/Qty',
-      available : '251 Qty',
-      disc : ' white',
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(API_URL + "/api/product",{
+        method : 'GET',
+      });
+      res
+        .json()
+        .then(res => setProducts(res))
+        .catch();
     }
-    
-  ];
+    fetchData();
+  },[]);
 
-  const columns = [
-    {
-      dataField : "id",
-      text : "ID"
-    },{
-      dataField : "name",
-      text : "Name"
-    },{
-      dataField : "email",
-      text : "Emaail"
-    },{
-      dataField : "mobile",
-      text : "Mobile"
-    },{
-      dataField : "city",
-      text : "City"
-    },{
-      dataField : "status",
-      text : "Status"
-    },
-  ];
   function modalButtonClickHandle(record){
-    console.log(record);
     setShowModal(true);
     setmodalCurrectRecord(record);
   };
@@ -86,9 +43,9 @@ function ProductList() {
   };
   function handleChangeState(record) {
     record.status = 'active';
-    data.find(e => e.id == record.id).status = 'active';
+    products.find(e => e.id == record.id).status = 'active';
     setShowModal(false)
-    console.log(data);
+    console.log(products);
   };
   return (
     <>
@@ -123,12 +80,12 @@ function ProductList() {
                   </thead>
                   <tbody>
                     {
-                      data.map(e => {
+                      products.map(e => {
                         return <>
                            <tr>
                             <td>{e.id}</td>
                             <td>{e.name}</td>
-                            <td>{ e.price }</td>
+                            <td>{ e.price  + (e.unit ?  '/' + e.unit : '') }</td>
                             <td> { e.available }</td>
                             <td>{ e.disc }</td>
                             <td>

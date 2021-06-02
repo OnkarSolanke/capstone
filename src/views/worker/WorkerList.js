@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from 'config';
 
 // react-bootstrap components
 import {
@@ -15,6 +16,22 @@ function WorkerList() {
 
   const [showModal, setShowModal] = React.useState(false);
   const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
+  const [hasError, setErrors] = React.useState(false);
+  const [worker, setWorker] = React.useState([]);
+
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(API_URL + "/api/worker",{
+        method : 'GET',
+      });
+      res
+        .json()
+        .then(res => setWorker(res))
+        .catch(err => setErrors(err));
+    }
+    fetchData();
+  },[]);
 
   const data = [
     {
@@ -34,27 +51,6 @@ function WorkerList() {
     },
   ];
 
-  const columns = [
-    {
-      dataField : "id",
-      text : "ID"
-    },{
-      dataField : "name",
-      text : "Name"
-    },{
-      dataField : "email",
-      text : "Emaail"
-    },{
-      dataField : "mobile",
-      text : "Mobile"
-    },{
-      dataField : "city",
-      text : "City"
-    },{
-      dataField : "status",
-      text : "Status"
-    },
-  ];
   function modalButtonClickHandle(record){
     console.log(record);
     setShowModal(true);
@@ -62,9 +58,9 @@ function WorkerList() {
   };
   function handleChangeState(record) {
     record.status = 'active';
-    data.find(e => e.id == record.id).status = 'active';
+    worker.find(e => e.id == record.id).status = 'active';
     setShowModal(false)
-    console.log(data);
+    console.log(worker);
   };
   return (
     <>
@@ -92,14 +88,14 @@ function WorkerList() {
                   </thead>
                   <tbody>
                     {
-                      data.map(e => {
+                      worker.map(e => {
                         return <>
                            <tr>
                             <td>{e.id}</td>
-                            <td>{e.name}</td>
+                            <td>{e.first_name + ' ' + e.last_name}</td>
                             <td>{ e.email }</td>
                             <td> { e.mobile }</td>
-                            <td>{ e.city }</td>
+                            <td>{ e.address[0].city }</td>
                             <td>
                               <Button
                                 className="btn-fill btn-wd"

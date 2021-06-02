@@ -1,5 +1,7 @@
 import ProductCard from 'components/product/ProductCard';
 import React, { useState } from 'react';
+import { API_URL } from 'config';
+
 // react-bootstrap components
 import {
   Container,
@@ -17,7 +19,26 @@ import Material from './categories/Materials';
 import Service from './categories/Services';
 
 function Search() {
-  const  products =  [{
+  const [products, setProducts] = React.useState([]);
+  const [search,setSearch] = React.useState("");
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(API_URL + "/api/product"+((search) ? "?key="+search : ""),{
+        method : 'GET',
+        data : {key : search}
+      });
+      res
+        .json()
+        .then(res => setProducts(res))
+        .catch();
+    }
+    fetchData();
+  },[search]);
+
+  function handleSelectChnage(value){
+    setSearch(value);
+  }
+  const  data =  [{
     id : 1,
     name : 'cement',
     price : '150/kg',
@@ -69,10 +90,10 @@ function Search() {
       <Container fluid>
       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" variant="pills">
         <Tab eventKey="home" title="Labours">
-          <Labour/>
+          <Labour onSelectChnage={handleSelectChnage}/>
         </Tab>
         <Tab eventKey="profile" title="Materials">
-          <Material/>
+          <Material onSelectChnage={handleSelectChnage} products = {products}/>
         </Tab>
         <Tab eventKey="services" title="Services">
           <Service/>
@@ -83,7 +104,7 @@ function Search() {
             <Form.Control className="border rounded" type="email" border="round" />
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-5">
           <Col md={2}>
             <Form>
               <h3 className="text-center"> Filter</h3>
@@ -130,10 +151,8 @@ function Search() {
             </Row>
           </Col>
         </Row>
-        
         </Tab>
       </Tabs>
-
       </Container>
     </>
   );

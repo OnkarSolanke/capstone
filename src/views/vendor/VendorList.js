@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from 'config';
 
 // react-bootstrap components
 import {
@@ -18,52 +19,22 @@ function VendorList() {
   const [showModal, setShowModal] = React.useState(false);
   const [showVendorDetailsModal, setshowVendorDetailsModal] = React.useState(false);
   const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
+  const [vendors, setVendors] = React.useState([]);
+  const [hasError, setErrors] = React.useState(false);
 
-  const data = [
-    {
-      id : 1,
-      name : 'Onkar solanke',
-      first_name : 'Onkar',
-      middle_name : 'Kalyanrao',
-      last_name : 'Solanke',
-      adhar : '987654321654',
-      email : 'o.solanke@gmaill.com',
-      materials : 'Cement',
-      mobile : '9595979549',
-      about : 'Demo',
-      city : 'Jalna',
-      status :  'Active',
-    },{
-      id: 2,
-      name : 'Vishal solanke',
-      email : 'o.solanke@gmaill.com',
-      mobile : '9595979549',
-      city : 'Pune',
-      status :  'In-active',
-    },
-  ];
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(API_URL + "/api/vendor",{
+        method : 'GET',
+      });
+      res
+        .json()
+        .then(res => setVendors(res))
+        .catch(err => setErrors(err));
+    }
+    fetchData();
+  },[]);
 
-  const columns = [
-    {
-      dataField : "id",
-      text : "ID"
-    },{
-      dataField : "name",
-      text : "Name"
-    },{
-      dataField : "email",
-      text : "Emaail"
-    },{
-      dataField : "mobile",
-      text : "Mobile"
-    },{
-      dataField : "city",
-      text : "City"
-    },{
-      dataField : "status",
-      text : "Status"
-    },
-  ];
   function modalButtonClickHandle(record){
     console.log(record);
     setShowModal(true);
@@ -75,10 +46,10 @@ function VendorList() {
     setmodalCurrectRecord(record);
   };
   function handleChangeState(record) {
-    record.status = 'active';
-    data.find(e => e.id == record.id).status = 'active';
+    record.status = 'Active';
+    vendors.find(e => e.id == record.id).status = 'Active';
     setShowModal(false)
-    console.log(data);
+    console.log(vendors);
   };
   return (
     <>
@@ -107,14 +78,15 @@ function VendorList() {
                   </thead>
                   <tbody>
                     {
-                      data.map(e => {
+                      vendors.map(e => {
+                        console.log(e);
                         return <>
                            <tr>
-                            <td>1</td>
-                            <td>{e.name}</td>
+                            <td>{e.id}</td>
+                            <td>{e.first_name + ' ' + e.last_name}</td>
                             <td>{ e.email }</td>
                             <td> { e.mobile }</td>
-                            <td>{ e.city }</td>
+                            <td>{ e.address[0].city }</td>
                             <td>
                               <Button
                                 className="btn-fill "
@@ -145,6 +117,7 @@ function VendorList() {
         </Row>
         <ViewVendorDetails
           show={showVendorDetailsModal}
+          record = {modalCurrectRecord}
           onHide={() => setshowVendorDetailsModal(false)}
         />
         {/* Mini Modal */}  
@@ -185,6 +158,7 @@ function VendorList() {
 }
 
 function ViewVendorDetails(props) {
+  var record = props.record
   return (
     <Modal
       {...props}
@@ -197,7 +171,7 @@ function ViewVendorDetails(props) {
       </Modal.Header>
       <Modal.Body>
           <Container>
-            <Row>
+            <Row className=" border-bottom">
               <Col md={10}>
                 <Row>
                   <Col md={4}>
@@ -210,22 +184,22 @@ function ViewVendorDetails(props) {
 
                       <Col md={7}>
                         <label >
-                           Onkar
+                          {record.first_name}
                         </label>
                       </Col>
                     </Row>
                   </Col>
                   <Col md={4}>
                     <Row>
-                      <Col md={5}>
+                      <Col md={6}>
                         <label className="text-muted">
                             Middle Name :
                         </label>
                       </Col>
 
-                      <Col md={7}>
+                      <Col md={6}>
                         <label >
-                          Kalyanrao
+                        {record.midle_name}
                         </label>
                       </Col>
                     </Row>
@@ -240,13 +214,13 @@ function ViewVendorDetails(props) {
 
                       <Col md={7}>
                         <label >
-                          Solanke
+                        {record.last_name}
                         </label>
                       </Col>
                     </Row>
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mt-5">
                   <Col md={6}>
                     <Row>
                       <Col md={3}>
@@ -257,7 +231,7 @@ function ViewVendorDetails(props) {
 
                       <Col md={9}>
                         <label >
-                            Onkar@gmail.com
+                        {record.email}
                         </label>
                       </Col>
                     </Row>
@@ -272,7 +246,7 @@ function ViewVendorDetails(props) {
 
                       <Col md={7}>
                         <label >
-                          9595979549
+                        {record.mobile}
                         </label>
                       </Col>
                     </Row>
@@ -289,7 +263,7 @@ function ViewVendorDetails(props) {
 
                       <Col md={9}>
                         <label >
-                            98765321021
+                        {record.adhar_no}
                         </label>
                       </Col>
                     </Row>
@@ -304,7 +278,7 @@ function ViewVendorDetails(props) {
 
                       <Col md={7}>
                         <label >
-                          Cement
+                        {record.material}
                         </label>
                       </Col>
                     </Row>
@@ -317,68 +291,80 @@ function ViewVendorDetails(props) {
                     width={200}
                     height={220}
                     alt="Vendor Imgage"
-                    src="/images/vendor/dummy.png"
+                    src={ (record.avtar) ?  API_URL + '/storage/avatars/vendors/' + record.avtar : '/images/vendor/dummy.png'}
                   />
                 </Figure>
               </Col>
             </Row>
-            <h4 className="text-muted">
-                Adress
-            </h4>
-            <p>
-              Sonal Nage Near railway staion
-            </p>
+            {
+              
+              (record.address) ? record.address.map( (a) => {
+                  return <>
+                      <h4 className="text-muted text-uppercase">
+                           {a.type} Address
+                        </h4>
+                        <p className="font-weight-bold pl-3">
+                          {a.address}
+                        </p>
+                        <Row className="pl-3 border-bottom">
+                          <Col md={4}>
+                              <Row>
+                                <Col md={5}>
+                                  <label className="text-muted">
+                                      City
+                                  </label>
+                                </Col>
+                                <Col md={6}>
+                                  <label>
+                                    {a.City}
+                                  </label>
+                                </Col>
+                              </Row>
+                            </Col>
+                            <Col md={4}>
+                              <Row>
+                                <Col md={5}>
+                                  <label className="text-muted">
+                                      Pin
+                                  </label>
+                                </Col>
+                                <Col md={6}>
+                                  <label>
+                                    {a.pine}
+                                  </label>
+                                </Col>
+                              </Row>
+                            </Col>
+                            <Col md={4}>
+                              <Row>
+                                <Col md={5}>
+                                  <label className="text-muted">
+                                      State
+                                  </label>
+                                </Col>
+                                <Col md={6}>
+                                  <label>
+                                      Maharashtra
+                                  </label>
+                                </Col>
+                              </Row>
+                            </Col>
+                        </Row>
+                  </>
+                }) : ''
+            }
+            
             <Row>
-              <Col md={4}>
-                  <Row>
-                    <Col md={5}>
-                      <label className="text-muted">
-                          City
-                      </label>
-                    </Col>
-                    <Col md={6}>
-                      <label>
-                          Jalna
-                      </label>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={4}>
-                  <Row>
-                    <Col md={5}>
-                      <label className="text-muted">
-                          Pin
-                      </label>
-                    </Col>
-                    <Col md={6}>
-                      <label>
-                          431203
-                      </label>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={4}>
-                  <Row>
-                    <Col md={5}>
-                      <label className="text-muted">
-                          State
-                      </label>
-                    </Col>
-                    <Col md={6}>
-                      <label>
-                          Maharashtra
-                      </label>
-                    </Col>
-                  </Row>
-                </Col>
-            </Row>
-            <Row>
-              <h4 className="text-muted">
-                  About
-              </h4>
-              <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-              </p>
+              <Col md='12'>
+                <h4 className="text-muted">
+                    About
+                </h4>
+              </Col>
+              <Col md="12">
+                <p >
+                    {record.about}
+                </p>
+              </Col>
             </Row>
           </Container>
       </Modal.Body>

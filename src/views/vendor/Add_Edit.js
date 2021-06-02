@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { API_URL } from 'config';
+import {toast} from 'react-toastify';
 
 // react-bootstrap components
 import {
@@ -9,7 +10,9 @@ import {
   Container,
   Row,
   Col,
+  Toast,
 } from "react-bootstrap";
+toast.configure()
 
 function Add_Edit() {
   const [firstName,setFirstName] = useState("");
@@ -18,20 +21,89 @@ function Add_Edit() {
   const [mobile,setMobile] = useState("");
   const [email,setEmail] = useState("");
   const [adhar,setAdhar] = useState("");
+  const [about,setAbout] = useState("");
+  const [material,setMaterial] = useState("");
+  const [file,setFile] = useState("");
+
+
+  const [address,setAddress] = useState("");
+  const [city,setCity] = useState("");
+  const [country,setCountry] = useState("India");
+  const [pine,setPine] = useState("");
+
+  const [tempAddress,setTempAddress] = useState("");
+  const [tempCity,setTempCity] = useState("");
+  const [tempCountry,setTempCountry] = useState("India");
+  const [tempPine,setTempPine] = useState("");
+
+  const [fileName,setFilename] = useState("Choose file");
+  const [istempAddress,setIstempAddress] = useState(false);
 
   async function save() {
-    let vedor = {firstName,lastName,midleName,mobile,email} ; 
+    let vedor = { 
+      firstName, 
+      lastName,
+      midleName,
+      mobile,
+      email,
+      adhar,
+      about,
+   
+        address,
+        city,
+        country,
+        pine,
+   
+ 
+        tempAddress,
+        tempCity,
+        tempCountry,
+        tempPine,
+      
+    }; 
+    console.log(file);
+    let formData = new FormData()
+    for ( var key in vedor ) {
+      formData.append(key, vedor[key]);
+    }
+  
+    formData.append('file',file);
+    formData.append('details',vedor);
     let result = await fetch(API_URL + "/api/vendor/store",{
       method : 'POST',
-      headers : {
-        "Content-Type" : "application/json",
-        "Accept" : "application/json"
-      },
-      body : JSON.stringify(vedor),
+      body : formData,
     });
-    
+
     result = await result.json();
-    console.log(result);
+    if(result.status && result.status == 'Error'){
+      for ( var key in result.massage ) {
+        toast.error(result.massage[key]);
+      }
+    }
+  }
+  function handleFileselection(event){
+    var target = event.target;
+    if(target.files && target.files.length > 0){
+
+      var file = target.files[0] 
+      setFile(file);
+      if(file.name){
+        setFilename(file.name);
+      }
+    }
+  }
+  function handleTempAddress(checked){
+    if(checked){
+      setTempAddress(address);
+      setTempCity(city);
+      setTempCountry(country);
+      setTempPine(pine);
+    }else{
+      setTempAddress("");
+      setTempCity("");
+      setTempCountry("India");
+      setTempPine("");
+    }
   }
   return (
     <>
@@ -44,42 +116,6 @@ function Add_Edit() {
               </Card.Header>
               <Card.Body>
                 <Form>
-                  {/* <Row>
-                    <Col className="pr-1" md="5">
-                      <Form.Group>
-                        <label>Company ()</label>
-                        <Form.Control
-                          
-                          
-                          
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="px-1" md="3">
-                      <Form.Group>
-                        <label>Username</label>
-                        <Form.Control
-                          
-                          
-                          type="text"
-                          
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pl-1" md="4">
-                      <Form.Group>
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <Form.Control
-                          
-                          type="email"
-                          
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row> */}
                   <Card className="shadow p-3 mb-5 bg-white rounded">
                   <Card.Header>
                       <Card.Title as="h5">Personal Information</Card.Title>
@@ -90,8 +126,6 @@ function Add_Edit() {
                         <Form.Group>
                           <label class="font-weight-bold">First Name</label>
                           <Form.Control
-                            
-                            
                             type="text"
                             value={firstName}
                             onChange = { (e) => setFirstName(e.target.value) }
@@ -112,8 +146,6 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Last Name</label>
                           <Form.Control
-                            
-                            
                             type="text"
                             value={lastName}
                             onChange = { (e) => setLastName(e.target.value) }
@@ -126,8 +158,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Email</label>
                           <Form.Control
-                            
-                            
+                            required
                             type="email"
                             value={email}
                             onChange = { (e) => setEmail(e.target.value) }
@@ -138,8 +169,7 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Mobile</label>
                           <Form.Control
-                            
-                            
+                            maxLength="10"
                             type="text"
                             value={mobile}
                             onChange = { (e) => setMobile(e.target.value) }
@@ -153,7 +183,7 @@ function Add_Edit() {
                         <label>adhar</label>
                         <Form.Control
                           background="secondary"
-                          
+                          maxLength="12"
                           type="text"
                           value={adhar}
                           onChange = { (e) => setAdhar(e.target.value) }
@@ -164,13 +194,35 @@ function Add_Edit() {
                       <Form.Group>
                         <label>Materials</label>
                         <Form.Control
-                          
-                          
                           type="text"
-                          value={adhar}
-                          onChange = { (e) => setAdhar(e.target.value) }
+                          value={material}
+                          onChange = { (e) => setMaterial(e.target.value) }
                         ></Form.Control>
                       </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sd="12">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroupFileAddon01">
+                          Upload
+                        </span>
+                      </div>
+                      <div className="custom-file">
+                        <Form.Control
+                          type="file"
+                          className="custom-file-input"
+                          id="inputGroupFile01"
+                          aria-describedby="inputGroupFileAddon01"
+                          accept="image/*"
+                          onChange={(event) => handleFileselection(event)}
+                        />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01" style={{height: '40px'}}>
+                          {fileName}
+                        </label>
+                      </div>
+                    </div>
                     </Col>
                   </Row>
                   </Card.Body>
@@ -185,10 +237,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Address</label>
                           <Form.Control
-                            
-                            
                             type="text"
-                            
+                            value = {address}
+                            onChange = { (e) => setAddress(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -198,10 +249,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>City</label>
                           <Form.Control
-                            
-                            
-                            type="text"
-                            
+                             value = {city}
+                             onChange = { (e) => setCity(e.target.value) }
+                              type="text"
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -209,10 +259,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Country</label>
                           <Form.Control
-                            
-                            
                             type="text"
-                            
+                            value = {country}
+                            onChange = { (e) => setCountry(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -220,8 +269,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Postal Code</label>
                           <Form.Control
-                            
                             type="number"
+                            value = {pine}
+                            onChange = { (e) => setPine(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -235,14 +285,16 @@ function Add_Edit() {
                     <Card.Body>
                       <Row>
                       <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Same as Permanent" />
+                        <Form.Check type="checkbox" label="Same as Permanent" onChange = {(e) => handleTempAddress(e.target.checked)} />
                       </Form.Group>
                       <Col md="12">
                         <Form.Group>
                           <label>Address</label>
                           <Form.Control
                             type="text"
-                          ></Form.Control>
+                            value = {tempAddress}
+                            onChange = { (e) => setTempAddress(e.target.value) }
+                          />
                         </Form.Group>
                       </Col>
                     </Row>
@@ -251,10 +303,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>City</label>
                           <Form.Control
-                            
-                            
-                            type="text"
-                            
+                          type="text"
+                          value = {tempCity}
+                          onChange = { (e) => setTempCity(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -262,10 +313,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Country</label>
                           <Form.Control
-                            
-                            
                             type="text"
-                            
+                            value = {tempCountry}
+                            onChange = { (e) => setTempCountry(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -273,8 +323,9 @@ function Add_Edit() {
                         <Form.Group>
                           <label>Postal Code</label>
                           <Form.Control
-                            
                             type="number"
+                            value = {tempPine}
+                            onChange = { (e) => setTempPine(e.target.value) }
                           ></Form.Control>
                         </Form.Group>
                       </Col>
@@ -290,6 +341,8 @@ function Add_Edit() {
                           cols="80"
                           rows="4"
                           as="textarea"
+                          value = {about}
+                          onChange = { (e) => setAbout(e.target.value) }
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -309,6 +362,16 @@ function Add_Edit() {
           </Col>
         </Row>
       </Container>
+      <div
+  aria-live="polite"
+  aria-atomic="true"
+  style={{
+    position: 'relative',
+    minHeight: '100px',
+  }}
+>
+  
+</div>
     </>
   );
 }
