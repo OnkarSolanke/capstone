@@ -47,6 +47,10 @@ class AuthService {
   isLogedIn(){
     return CookieService.get('access_token') ? true : false;
   }
+
+  doLogoutUser(){
+    CookieService.remove('access_token');
+  }
 }
 
 export default new AuthService();

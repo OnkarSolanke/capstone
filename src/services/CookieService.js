@@ -13,7 +13,7 @@ class CookieService {
   }
 
   remove(key) {
-    cookie.remove(key);
+    cookie.remove(key, { path: '/' });
   }
 }
 

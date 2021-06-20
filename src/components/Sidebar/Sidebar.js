@@ -15,12 +15,11 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, NavLink } from "react-router-dom";
 
 import { Nav } from "react-bootstrap";
 
-import logo from "assets/img/reactlogo.png";
 
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
@@ -43,13 +42,13 @@ function Sidebar({ color, image, routes }) {
           >
             <div className="logo-img">
               <img
-                src={require("assets/img/reactlogo.png").default}
+                src={require("assets/img/civil_shopee.jpeg").default}
                 alt="..."
               />
             </div>
           </a>
-          <a className="simple-text" href="">
-           Capstone
+          <a className="simple-text" href="/">
+          Civil Shopee
           </a>
         </div>
         <Nav>
@@ -69,8 +68,11 @@ function Sidebar({ color, image, routes }) {
                     className="nav-link"
                     activeClassName="active"
                   >
-                    <i className={prop.icon} />
-                    <p>{prop.name}</p>
+                    {
+                      prop.iconComp ? <prop.iconComp size={30} className="mr-3"> </prop.iconComp> :
+                      <i className={prop.icon} />
+                    }
+                    <p> {prop.name}</p>
                   </NavLink>
                 </li>
               );

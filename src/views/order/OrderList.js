@@ -11,7 +11,7 @@ import {
   DropdownButton,
   Dropdown,
 } from "react-bootstrap";
-import { ArrowRight } from 'react-bootstrap-icons';
+import { Cursor, Eye } from 'react-bootstrap-icons';
 import ViewVendorDetails from "./ViewVendorDetails";
 function OrderList() {
 
@@ -124,17 +124,11 @@ function OrderList() {
     setOrders(updatedRecord);
   }
   function modalButtonClickHandle(record){
-    setShowModal(true);
+    setshowVendorDetailsModal(true);
     setmodalCurrectRecord(record);
   };
   function viewDetailsModalButtonClickHandle(){
     setshowVendorDetailsModal(true);
-  };
-  function handleChangeState(record) {
-    record.status = 'active';
-    orders.find(e => e.id == record.id).status = 'active';
-    setShowModal(false)
-    console.log(orders);
   };
   return (
     <>
@@ -172,7 +166,7 @@ function OrderList() {
                             <td>{e.quantity_required}</td>
                             <td>{e.address ? e.address.address : '' }</td>
                             <td> { e.status && orderStatus[e.status] ? orderStatus[e.status].name : '' }</td>
-                            <td>{ e.vendor ? e.vendor.first_name + ' ' + e.vendor.last_name : '' }</td>
+                            <td>{ e.vendor ? e.vendor.first_name + ' ' + e.vendor.last_name : ''  } <Eye as="button" style={{cursor: 'pointer'}} onClick={(event) => modalButtonClickHandle(e.vendor)}  color="#1DC7EA"/> </td>
                             <td>
                               <DropdownButton  variant="info" id="dropdown-item-button" title="Action">
                               { e.status && orderStatus[e.status] ? orderStatus[e.status].action(e.id) : '' }

@@ -1,4 +1,3 @@
-import { API_URL } from 'config';
 import React, { useState } from 'react';
 import CookieService from "services/CookieService";
 import AuthService from "services/AuthService";
@@ -6,7 +5,6 @@ import AuthService from "services/AuthService";
 
 // react-bootstrap components
 import {
-  Card,
   Row,
   Col,
   Form,
@@ -21,36 +19,36 @@ const expiresAt = 3;
 
 function ProductBuyForm({product,onHide,showModal}) {
 
-    const [mobileNo , setMobileNo] = React.useState('');
+    const [mobileNo , setMobileNo] = useState('');
 
-    const [otpValue,setOtpValue] = React.useState('');
+    const [otpValue,setOtpValue] = useState('');
 
-    const [setDisabled , handleDisabled] = React.useState(true);
-    const [otpDisabled , handleotpDisabled] = React.useState(true);
-    const [verifyDisabled , handleverifyDisabled] = React.useState(true);
-    const [isVerified , setIsVerified] = React.useState(AuthService.isLogedIn());
-    const [otpMessage , handleOtpMessage] = React.useState('');
-    const [timer , setTimer] = React.useState();
+    const [setDisabled , handleDisabled] = useState(true);
+    const [otpDisabled , handleotpDisabled] = useState(true);
+    const [verifyDisabled , handleverifyDisabled] = useState(true);
+    const [isVerified , setIsVerified] = useState(AuthService.isLogedIn());
+    const [otpMessage , handleOtpMessage] = useState('');
+    const [timer , setTimer] = useState();
 
-    const [address,setAddress] = React.useState();
-    const [requiredQty,setrequiredQty] = React.useState();
-    const [detailrequiredQty,setdetailrequiredQty] = React.useState();
-    const [customerName , setCustomerName] = React.useState(function(){
+    const [address,setAddress] = useState();
+    const [requiredQty,setrequiredQty] = useState();
+    const [detailrequiredQty,setdetailrequiredQty] = useState();
+    const [customerName , setCustomerName] = useState(function(){
         let user = CookieService.get('user');
         if(user){
-            return user.name == 'NA' ? '' : user.name;
+            return user.name === 'NA' ? '' : user.name;
         }
         return '';
     });
     function isNumber(o) {
-        return o == '' || !isNaN(o - 0);
+        return o === '' || !isNaN(o - 0);
     }
     function handleMobileKeyDown(e){
         var keyCode = e.keyCode || e.which;
         if (keyCode >= 96 && keyCode <= 105) {
             keyCode -= 48;
         }
-        if(keyCode == 8) return true;
+        if(keyCode === 8) return true;
         if(!isNumber(String.fromCharCode(keyCode))){
             e.preventDefault();
         }
@@ -58,14 +56,14 @@ function ProductBuyForm({product,onHide,showModal}) {
     function handleKeyUp(e){
         var length = e.target.value.length;
         handleDisabled(true)
-        if(length == 10) handleDisabled(false);
+        if(length === 10) handleDisabled(false);
     }
     async function handleGenrateOtp(){
         let response = await Api().post('/genrate-otp',{
             mobile : mobileNo + '@civilshopee.customer',
         });
         console.log(response);
-        if(response.status == 200){
+        if(response.status === 200){
             handleDisabled(true);
             handleOtpMessage('OTP Genarated');
             handleotpDisabled(false)
@@ -93,14 +91,14 @@ function ProductBuyForm({product,onHide,showModal}) {
     function hanldeOtpKeyUp(e){
         var length = e.target.value.length;
         handleverifyDisabled(true)
-        if(length == 4) handleverifyDisabled(false);
+        if(length === 4) handleverifyDisabled(false);
     }
     async function handleOtpVerivication(){
         let response = await Api().post('/login',{
             username : mobileNo + '@civilshopee.customer',
             password : otpValue,
         });
-        if(response.status == 200){
+        if(response.status === 200){
             console.log(response);
             if(response.data && response.data.access_token){
                 
@@ -177,7 +175,7 @@ function ProductBuyForm({product,onHide,showModal}) {
                                             Genrate OTP
                                         </Button>
                                     </Col>
-                                    <Col md={ { span: 2 }}>
+                                    <Col md={ { span: 1 }}>
                                         <p><small>
                                         {timer}
                                         </small></p>

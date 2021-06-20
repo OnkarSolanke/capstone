@@ -1,13 +1,15 @@
 
 import React from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useHistory } from "react-router-dom";
 import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
 
 import routes from "../../routes/WelcomeRoutes";
 import AuthService from "services/AuthService";
-import { API_URL } from "config";
+import { Lock } from "react-bootstrap-icons";
 
 function Header({ color }) {
+  const history = useHistory();
+
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -20,22 +22,19 @@ function Header({ color }) {
     };
     document.body.appendChild(node);
   };
-  async function handletest(){
-    let result = await fetch(API_URL + "/api/test",{
-      method : 'GET',
-    });
-
-    result = await result.json();
-    console.log(result,'testapi')
-  }
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
       if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
         return routes[i].name;
       }
     }
-    return "Capstone";
+    return "Civil Shopee";
   };
+  function handleLogOut(event){
+    AuthService.doLogoutUser();
+    history.push('/login');
+  }
+
   return (
     <Navbar bg='dark' expand="lg" fixed="top" className="navbar-default navbar-static-top">
       <Container fluid>
@@ -109,22 +108,15 @@ function Header({ color }) {
                   <Nav.Item>
                     <Nav.Link
                       className="m-0"
-                      href="javascript:void(0)"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => handleLogOut(e)}
                     >
                       <NavLink to="/logout">
-                        <span className="no-icon">Log Out</span>
+                        <span className="no-icon">Log Out <Lock/></span>
                       </NavLink>
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-              <Nav.Link
-                className="m-0"
-                onClick={handletest}
-              >
-                <span className="no-icon">test</span>
-              </Nav.Link>
-            </Nav.Item>
+                </Nav.Item>
                 </>
             }
           </Nav>

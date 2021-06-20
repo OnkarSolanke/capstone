@@ -15,6 +15,7 @@ import { Redirect } from "react-router";
 const LoginForm = () => {
   const [username,setUserName] = useState("");
   const [password,setPassword] = useState("");
+  const [loginMessage,setloginMessage] = useState({message : " We'll never share your email with anyone else.", class : "text-muted" })
   let history = useHistory();
   async function login(){
     let credentials = { username,password};
@@ -32,6 +33,13 @@ const LoginForm = () => {
           default:
             break;
         }
+      }
+      console.log(result)
+      if(result.status === 401){
+        setloginMessage({
+          message : result.message,
+          class : "text-muted text-danger"
+        })
       }
     }
   }
@@ -51,8 +59,8 @@ const LoginForm = () => {
                 value={username}
                 onChange = { (e) => setUserName(e.target.value) }
                 />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
+              <Form.Text className={loginMessage.class}>
+               {loginMessage.message}
               </Form.Text>
             </Form.Group>
 
