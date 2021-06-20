@@ -17,8 +17,7 @@ function ProductCard({product,onClick}) {
   return (
     <>
         <Card 
-            className="card-stats"
-            className={hovered ? 'shadow bg-white rounded' : ''}
+            className={(hovered ? 'shadow bg-white rounded' : '') + 'card-stats'}
             onMouseEnter={toggleHover}
             onMouseLeave={toggleHover}
             onClick={onClick}>

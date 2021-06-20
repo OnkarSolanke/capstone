@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
 
 import AdminNavbar from "components/Navbars/AdminNavbar";
@@ -10,9 +10,9 @@ import routes from "routes/VendorRoutes.js";
 import sidebarImage from "assets/img/sidebar-3.jpg";
 
 function Vendor() {
-  const [image, setImage] = React.useState(sidebarImage);
-  const [color, setColor] = React.useState("black");
-  const [hasImage, setHasImage] = React.useState(true);
+  const [image] = React.useState(sidebarImage);
+  const [color] = React.useState("black");
+  const [hasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {

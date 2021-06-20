@@ -22,9 +22,8 @@ function Worker_Add_Edit() {
   const [qualif,setQualif] = useState("");
   const [skill,setSkill] = useState("");
 
-  const [adhar,setAdhar] = useState("");
+  const [adhar] = useState("");
   const [about,setAbout] = useState("");
-  const [material,setMaterial] = useState("");
   const [file,setFile] = useState("");
 
 
@@ -39,7 +38,6 @@ function Worker_Add_Edit() {
   const [tempPine,setTempPine] = useState("");
 
   const [fileName,setFilename] = useState("Choose file");
-  const [istempAddress,setIstempAddress] = useState(false);
 
 
   async function save() {

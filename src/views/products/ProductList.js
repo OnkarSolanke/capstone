@@ -1,5 +1,4 @@
 import React from "react";
-import { API_URL } from 'config';
 import Api from 'services/Api';
 
 import {
@@ -18,8 +17,6 @@ import AddNew from "./AddNew";
 function ProductList() {
 
   const [showModal, setShowModal] = React.useState(false);
-  const [showVendorDetailsModal, setshowVendorDetailsModal] = React.useState(false);
-  const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
   const [products, setProducts] = React.useState([]);
   const [units, setUnites] = React.useState([]);
 
@@ -38,16 +35,6 @@ function ProductList() {
 
   function modalButtonClickHandle(record){
     setShowModal(true);
-    setmodalCurrectRecord(record);
-  };
-  function viewDetailsModalButtonClickHandle(){
-    setshowVendorDetailsModal(true);
-  };
-  function handleChangeState(record) {
-    record.status = 'active';
-    products.find(e => e.id == record.id).status = 'active';
-    setShowModal(false)
-    console.log(products);
   };
   return (
     <>

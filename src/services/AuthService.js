@@ -5,12 +5,6 @@ import CookieService from "./CookieService";
 import {API_URL} from 'config';
 
 const expiresAt = 60 * 24;
-
-let credentials =  {
-  username : '',
-  password : ''
-}
-
 class AuthService {
   async doUserLogin(credentials) {
     try {

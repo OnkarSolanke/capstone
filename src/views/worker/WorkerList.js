@@ -1,7 +1,4 @@
 import React from "react";
-import { API_URL } from 'config';
-
-// react-bootstrap components
 import {
   Card,
   Table,
@@ -17,7 +14,6 @@ function WorkerList() {
 
   const [showModal, setShowModal] = React.useState(false);
   const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
-  const [hasError, setErrors] = React.useState(false);
   const [worker, setWorker] = React.useState([]);
 
 
@@ -36,24 +32,6 @@ function WorkerList() {
     fetchData();
   },[]);
 
-  const data = [
-    {
-      id : 1,
-      name : 'Onkar solanke',
-      email : 'o.solanke@gmaill.com',
-      mobile : '9595979549',
-      city : 'Jalna',
-      status :  'Active',
-    },{
-      id: 2,
-      name : 'Vishal solanke',
-      email : 'o.solanke@gmaill.com',
-      mobile : '9595979549',
-      city : 'Pune',
-      status :  'In-active',
-    },
-  ];
-
   function modalButtonClickHandle(record){
     console.log(record);
     setShowModal(true);
@@ -61,7 +39,7 @@ function WorkerList() {
   };
   function handleChangeState(record) {
     record.status = 'active';
-    worker.find(e => e.id == record.id).status = 'active';
+    worker.find(e => e.id === record.id).status = 'active';
     setShowModal(false)
     console.log(worker);
   };
@@ -102,7 +80,7 @@ function WorkerList() {
                             <td>
                               <Button
                                 className="btn-fill btn-wd"
-                                variant = { e.status == 'Active' ? 'success' : 'info' }
+                                variant = { e.status === 'Active' ? 'success' : 'info' }
                                 onClick={() => modalButtonClickHandle(e)}
                               >
                                {e.status}

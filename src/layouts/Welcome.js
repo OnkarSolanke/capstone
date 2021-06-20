@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
 
 import WelcomeNavbar from "../components/Navbars/WelcomeNavbar.js";
@@ -28,8 +28,7 @@ import routes from "../routes/WelcomeRoutes";
 function Welcome() {
   console.log('hel0')
 //   const [image, setImage] = React.useState(sidebarImage);
-  const [color, setColor] = React.useState("black");
-  const [hasImage, setHasImage] = React.useState(true);
+  const [color] = React.useState("black");
   const location = useLocation();
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {

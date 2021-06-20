@@ -202,7 +202,6 @@ function ProductBuyForm({product,onHide,showModal}) {
                                             className="btn-fill align-bottom"
                                             type="button"
                                             variant="success"
-                                            onClick=''
                                             disabled={verifyDisabled}
                                             onClick={handleOtpVerivication}
                                         >

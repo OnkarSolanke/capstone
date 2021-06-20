@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React from "react";
 import { useLocation, Route, Switch } from "react-router-dom";
 
 import WelcomeNavbar from "../components/Navbars/WelcomeNavbar.js";
@@ -7,8 +7,7 @@ import WelcomeNavbar from "../components/Navbars/WelcomeNavbar.js";
 import routes from "../routes/DefaultRoutes";
 
 function Default() {
-  const [color, setColor] = React.useState("black");
-  const [hasImage, setHasImage] = React.useState(true);
+  const [color] = React.useState("black");
   const location = useLocation();
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {

@@ -26,8 +26,8 @@ ReactDOM.render(
       <Route path="/admin" render={(props) => <LogInProtector comp = {AdminLayout} />} />
       <Route path="/welcome" render={(props) => <Welcome {...props} />} />
       <Route path="/vendor" render={(props) => <Vendor {...props} />} />
-      <Route path="/" render={(props) => <Default {...props} />} />
       <Redirect from="/" to="/login" />
+      <Route path="/" render={(props) => <Default {...props} />} />
     </Switch>
   </BrowserRouter>,
   </React.StrictMode>,
