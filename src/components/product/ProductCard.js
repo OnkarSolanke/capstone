@@ -8,18 +8,20 @@ import {
   Figure,
 } from "react-bootstrap";
 
-function ProductCard({product}) {
+function ProductCard({product,onClick}) {
+
 
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
-  console.log(product);
+
   return (
     <>
         <Card 
             className="card-stats"
             className={hovered ? 'shadow bg-white rounded' : ''}
             onMouseEnter={toggleHover}
-            onMouseLeave={toggleHover}>
+            onMouseLeave={toggleHover}
+            onClick={onClick}>
             <Card.Body className="pt-0">
                 <Row>
                 <Col xs="12" className="p-1">

@@ -11,6 +11,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import Api from "services/Api";
 
 function WorkerList() {
 
@@ -22,13 +23,15 @@ function WorkerList() {
 
   React.useEffect(() => {
     async function fetchData() {
-      const res = await fetch(API_URL + "/api/worker",{
-        method : 'GET',
-      });
-      res
-        .json()
-        .then(res => setWorker(res))
-        .catch(err => setErrors(err));
+      // const res = await fetch(API_URL + "/api/worker",{
+      //   method : 'GET',
+      // });
+      // res
+      //   .json()
+      //   .then(res => setWorker(res))
+      //   .catch(err => setErrors(err));
+      const res = await Api().get('/worker');
+      setWorker(res.data)
     }
     fetchData();
   },[]);

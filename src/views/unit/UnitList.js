@@ -15,23 +15,18 @@ import {
 } from "react-bootstrap";
 import AddNew from "./AddNew";
 
-function ProductList() {
+function UnitList() {
 
   const [showModal, setShowModal] = React.useState(false);
   const [showVendorDetailsModal, setshowVendorDetailsModal] = React.useState(false);
   const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
-  const [products, setProducts] = React.useState([]);
-  const [units, setUnites] = React.useState([]);
+  const [unit, setUnit] = React.useState([]);
 
   React.useEffect(() => {
     async function fetchData() {
-      const res = await Api().get("/product");
-      if(res.status == 200){
-         if(res.data){
-            setUnites(res.data.units)
-            setProducts(res.data.products);
-         } 
-      }
+      const res = await Api().get('/unit');
+      console.log(res);
+      if(res.status == 200) setUnit(res.data);
     }
     fetchData();
   },[]);
@@ -45,9 +40,9 @@ function ProductList() {
   };
   function handleChangeState(record) {
     record.status = 'active';
-    products.find(e => e.id == record.id).status = 'active';
+    unit.find(e => e.id == record.id).status = 'active';
     setShowModal(false)
-    console.log(products);
+    console.log(unit);
   };
   return (
     <>
@@ -58,7 +53,7 @@ function ProductList() {
               <Card.Header>
               <Row>
                 <Col md={6}>
-                  <Card.Title as="h4" className="w-50">Products</Card.Title>  
+                  <Card.Title as="h4" className="w-50">Units</Card.Title>  
                 </Col>
                 <Col md={6}>
                   <Button className="float-right"
@@ -73,28 +68,19 @@ function ProductList() {
                   <thead>
                     <tr>
                       <th>Sr.</th>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Availeble</th>
-                      <th width="500" >Description</th>
-                      <th width="150">Action</th>
+                      <th width="1000" >Unit</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      products.map(e => {
+                      unit.map(e => {
                         return <>
                            <tr>
                             <td>{e.id}</td>
-                            <td>{e.name}</td>
-                            <td>{ e.price  + (e.unit ?  '/' + e.unit : '') }</td>
-                            <td> { e.available }</td>
-                            <td>{ e.disc }</td>
+                            <td>{e.unit}</td>
                             <td>
-                              <DropdownButton  variant="Info" id="dropdown-item-button" title="Action">
-                                <Dropdown.Item as="button">Edit</Dropdown.Item>
-                                <Dropdown.Item as="button">Delete</Dropdown.Item>
-                              </DropdownButton>
+                              <Button> Enable</Button>
                             </td>
                           </tr>
                         </>
@@ -108,16 +94,16 @@ function ProductList() {
         </Row>
         {/* Mini Modal */}  
           <Modal
-            size="xl"
+            size="l"
             show={showModal}
             onHide={() => setShowModal(false)}
           >
             <Modal.Header closeButton
               className="text-center">
-                 <Modal.Title className="w-100 mt-0">Add New Product</Modal.Title>
+                 <Modal.Title className="w-100 mt-0">Unit</Modal.Title>
             </Modal.Header>
             <Modal.Body className="border-top">  
-              <AddNew units={units}/>         
+              <AddNew/>         
             </Modal.Body>
 
           </Modal>
@@ -126,4 +112,4 @@ function ProductList() {
     </>
   );
 }
-export default ProductList;
+export default UnitList;

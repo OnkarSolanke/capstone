@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import { API_URL } from 'config';
 import {toast} from 'react-toastify';
+import Api from 'services/Api';
 
 // react-bootstrap components
 import {
@@ -15,15 +16,15 @@ import {
 } from "react-bootstrap";
 toast.configure()
 
-function AddNew() {
-    const [name,setName] = useState("");
+function AddNew(props) {
+    const [name,setName] = useState();
     const [price,setPrice] = useState(0);
     const [dics,setDics] = useState("");
     const [stock,setStock] = useState(0);
     const [unit,setUnit] = useState("Unit");
     const [file,setFile] = useState("");
     const [fileName,setFilename] = useState("Choose file");
-
+    const units = props.units;
 
     const handleSelect=(e)=>{
       var value = e;
@@ -85,7 +86,7 @@ function AddNew() {
                       </Col>
                       <Col md="4">
                           <label>Price</label>
-                        <InputGroup className="mb-3">
+                       <InputGroup className="mb-3">
                             <InputGroup.Prepend>
                                 <InputGroup.Text>&#8377;</InputGroup.Text>
                             </InputGroup.Prepend>
@@ -100,11 +101,11 @@ function AddNew() {
                                 id="unit-selection"
                                 onSelect={handleSelect}
                                 >
-                                <Dropdown.Item eventKey="Qty">Qty</Dropdown.Item>
-                                <Dropdown.Item eventKey="Kg">Kg</Dropdown.Item>
-                                <Dropdown.Item eventKey="Meter">Meter</Dropdown.Item>
-                                <Dropdown.Item eventKey="Liter">Liter</Dropdown.Item>
-                                <Dropdown.Item eventKey="Foot">Foot</Dropdown.Item>
+                                { 
+                                  units.map( e => {
+                                    return <Dropdown.Item eventKey={e.unit}>{e.unit}</Dropdown.Item>
+                                  })
+                                }
                             </DropdownButton>
                         </InputGroup>
                       </Col>

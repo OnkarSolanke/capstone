@@ -17,7 +17,6 @@ class AuthService {
       const response = await axios.post(API_URL + '/api/login', credentials);
       return response.data;
     } catch (error) {
-      console.error("Error", error.response);
       return false;
     }
   }
@@ -26,20 +25,26 @@ class AuthService {
       if (!remember) {
         const options = { path: "/" };
         CookieService.set("access_token", response.access_token, options);
+         if(response.user){
+            CookieService.set("user", response.user, options);
+          }
         return true;
       }
   
       let date = new Date();
-      date.setTime(date.getTime() + expiresAt * 60 * 1000);
-      const options = { path: "/", expires: date };
+      date = date.setTime(date.getTime() + expiresAt * 60 * 1000);
+      const options = { path: "/", expires: date ,maxAge : 10};
+      console.log(options);
       CookieService.set("access_token", response.access_token, options);
+      if(response.user){
+        CookieService.set("user", response.user, options);
+      }
       return true;
     }
     return false;
   }
 
   isLogedIn(){
-   console.log(CookieService.get('access_token'));
     return CookieService.get('access_token') ? true : false;
   }
 }

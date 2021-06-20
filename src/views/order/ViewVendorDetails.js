@@ -1,187 +1,15 @@
-import React from "react";
-import { API_URL } from 'config';
 
-// react-bootstrap components
+import { API_URL } from "config";
+import React from "react";
+
 import {
-  Card,
-  Table,
   Container,
   Modal,
   Button,
   Row,
   Col,
-  Image,
   Figure,
 } from "react-bootstrap";
-import CookieService from "services/CookieService";
-import Handle405 from "services/Handle405";
-import { useHistory } from "react-router-dom";
-
-function VendorList() {
-
-  const [showModal, setShowModal] = React.useState(false);
-  const [showVendorDetailsModal, setshowVendorDetailsModal] = React.useState(false);
-  const [modalCurrectRecord, setmodalCurrectRecord] = React.useState([]);
-  const [vendors, setVendors] = React.useState([]);
-  const [hasError, setErrors] = React.useState(false);
-  const [is405 ,set405] = React.useState({status:false,type:''});
-
-  React.useEffect(() => {
-    
-    var token = CookieService.get('access_token');
-    if(token){
-      token = 'Bearer ' + token;
-    }
-    async function fetchData() {
-      const res = await fetch(API_URL + "/api/vendor",{
-        method : 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization' : token
-        },
-      });
-      res
-        .json()
-        .then(res => {
-          if(res.error){
-            set405({status : true, type : res.type});
-          }else{
-            setVendors(res);
-          }
-        })
-        .catch(err => {
-          console.log(err,'error');
-        });
-    }
-    fetchData();
-  },[]);
-
-  function modalButtonClickHandle(record){
-    console.log(record);
-    setShowModal(true);
-    setmodalCurrectRecord(record);
-  };
-  function viewDetailsModalButtonClickHandle(record){
-    console.log(record);
-    setshowVendorDetailsModal(true);
-    setmodalCurrectRecord(record);
-  };
-  function handleChangeState(record) {
-    record.status = 'Active';
-    vendors.find(e => e.id == record.id).status = 'Active';
-    setShowModal(false)
-    console.log(vendors);
-  };
-  const history = useHistory();
-  if(is405.status) {
-    history.push('/admin/dashbord');
-  }
-  return (
-    <>
-      <Container fluid>
-        <Row>
-          <Col md="12">
-            <Card className="card-plain table-plain-bg">
-              <Card.Header>
-                <Card.Title as="h4">All Registered Vendors</Card.Title>
-                <p className="card-category">
-                    
-                </p>
-              </Card.Header>
-              <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover">
-                  <thead>
-                    <tr>
-                      <th className="border-0">ID</th>
-                      <th className="border-0">Name</th>
-                      <th className="border-0">Email</th>
-                      <th className="border-0">Mobile</th>
-                      <th className="border-0">City/Area</th>
-                      <th className="border-0">Status</th>
-                      <th className="border-0">action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      vendors.map(e => {
-                        console.log(e);
-                        return <>
-                           <tr>
-                            <td>{e.id}</td>
-                            <td>{e.first_name + ' ' + e.last_name}</td>
-                            <td>{ e.email }</td>
-                            <td> { e.mobile }</td>
-                            <td>{ e.address[0].city }</td>
-                            <td>
-                              <Button
-                                className="btn-fill "
-                                variant = { e.status == 'Active' ? 'success' : 'info' }
-                                onClick={() => modalButtonClickHandle(e)}
-                              >
-                               {e.status}
-                              </Button>
-                            </td>
-                            <td>
-                              <Button
-                                    className="btn-fill  ml-2"
-                                    variant = 'primary'
-                                    onClick={() => viewDetailsModalButtonClickHandle(e)}
-                                  >
-                                  View Details
-                              </Button>
-                            </td>
-                          </tr>
-                        </>
-                      })
-                    }
-                  </tbody>
-                </Table>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <ViewVendorDetails
-          show={showVendorDetailsModal}
-          record = {modalCurrectRecord}
-          onHide={() => setshowVendorDetailsModal(false)}
-        />
-        {/* Mini Modal */}  
-          <Modal
-            className=" modal-primary"
-            show={showModal}
-            onHide={() => setShowModal(false)}
-          >
-            <Modal.Header className="justify-content-center">
-             
-            </Modal.Header>
-            <Modal.Body className="text-center">
-              <p>Are your sure do you want to change status of {modalCurrectRecord.name}?</p>
-            </Modal.Body>
-            <div className="modal-footer">
-              <Button
-                className="btn-simple"
-                type="button"
-                variant="danger"
-                onClick={() => setShowModal(false)}
-              >
-                Back
-              </Button>
-              <Button
-                className="btn-simple"
-                type="button"
-                variant="info"
-                onClick={() => handleChangeState(modalCurrectRecord)}
-              >
-                change
-              </Button>
-            </div>
-          </Modal>
-          {/* End Modal */}
-      </Container>
-    </>
-  );
-}
-
 function ViewVendorDetails(props) {
   var record = props.record
   return (
@@ -399,4 +227,5 @@ function ViewVendorDetails(props) {
     </Modal>
   );
 }
-export default VendorList;
+
+export default ViewVendorDetails;

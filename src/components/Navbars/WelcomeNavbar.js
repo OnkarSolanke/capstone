@@ -5,6 +5,7 @@ import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
 
 import routes from "../../routes/WelcomeRoutes";
 import AuthService from "services/AuthService";
+import { API_URL } from "config";
 
 function Header({ color }) {
   const location = useLocation();
@@ -19,7 +20,14 @@ function Header({ color }) {
     };
     document.body.appendChild(node);
   };
+  async function handletest(){
+    let result = await fetch(API_URL + "/api/test",{
+      method : 'GET',
+    });
 
+    result = await result.json();
+    console.log(result,'testapi')
+  }
   const getBrandText = () => {
     for (let i = 0; i < routes.length; i++) {
       if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
@@ -101,7 +109,7 @@ function Header({ color }) {
                   <Nav.Item>
                     <Nav.Link
                       className="m-0"
-                      href="#pablo"
+                      href="javascript:void(0)"
                       onClick={(e) => e.preventDefault()}
                     >
                       <NavLink to="/logout">
@@ -109,6 +117,14 @@ function Header({ color }) {
                       </NavLink>
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item>
+              <Nav.Link
+                className="m-0"
+                onClick={handletest}
+              >
+                <span className="no-icon">test</span>
+              </Nav.Link>
+            </Nav.Item>
                 </>
             }
           </Nav>

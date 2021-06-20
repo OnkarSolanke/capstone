@@ -1,5 +1,4 @@
 import React,{useState} from "react";
-import { API_URL } from 'config';
 import { useHistory } from "react-router-dom";
 
 import {
@@ -22,9 +21,19 @@ const LoginForm = () => {
     const result = await Auth.doUserLogin(credentials);
     if(result){
       const ab = Auth.handleLoginSuccess(result,false);
-      history.push("/home");
+      if(result.user){
+        switch (result.user.type) {
+          case "ADMIN":
+            history.push("/admin/dashbord");
+            break;
+          case "VENDOR":
+            history.push("/vendor/dashbord");
+            break;
+          default:
+            break;
+        }
+      }
     }
-    console.log(result);
   }
   return (
     <Row>

@@ -11,6 +11,9 @@ import VendorList from "views/vendor/VendorList";
 import Underdevlopment from 'views/Underdevlopment';
 import WorkerList from "views/worker/WorkerList";
 import ProductList from "views/products/ProductList";
+import UnitList from "views/unit/UnitList";
+import OrderList from "views/order/OrderList";
+
 
 const dashboardRoutes = [
   {
@@ -36,7 +39,19 @@ const dashboardRoutes = [
     name: "Products",
     icon: "nc-icon nc-bank",
     component: ProductList,
-    layout: "/vendor",
+    layout: "/admin",
+  },{
+    path: "/register/units",
+    name: "Units",
+    icon: "nc-icon nc-bank",
+    component: UnitList,
+    layout: "/admin",
+  },{
+    path: "/register/order",
+    name: "Orders",
+    icon: "nc-icon nc-bank",
+    component: OrderList,
+    layout: "/admin",
   }
   // {
   //   path: "/user",
