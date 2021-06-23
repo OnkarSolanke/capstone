@@ -14,9 +14,6 @@ import {
   Tab,
 
 } from "react-bootstrap";
-import Labour from './categories/Labours';
-import Material from './categories/Materials';
-import Service from './categories/Services';
 import ProductBuyForm from 'components/product/ProductBuyForm';
 
 function Search() {
@@ -38,9 +35,6 @@ function Search() {
     fetchData();
   },[search]);
 
-  function handleSelectChnage(value){
-    setSearch(value);
-  }
   function handleProductBuy(product){
     setProductsFormModal(true);
     setCurrentProduct(product);

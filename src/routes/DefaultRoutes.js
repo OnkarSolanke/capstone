@@ -4,6 +4,13 @@ import Search from "views/search.js";
 
 const DefaultRoutes = [
   {
+    path: "/",
+    name: "Login",
+    icon: "",
+    component: LoginForm,
+    layout: "/Default",
+    protection : LogOutProtector
+  },{
     path: "/login",
     name: "Login",
     icon: "",
