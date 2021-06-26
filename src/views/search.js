@@ -7,12 +7,6 @@ import {
   Container,
   Row,
   Col,
-  Card,
-  ListGroup,
-  Form,
-  Tabs,
-  Tab,
-
 } from "react-bootstrap";
 import ProductBuyForm from 'components/product/ProductBuyForm';
 

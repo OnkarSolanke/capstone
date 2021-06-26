@@ -65,10 +65,13 @@ function Header({ color }) {
               <Nav.Link
                 className="m-0"
                 href="#pablo"
+                to="/search"
                 onClick={(e) => e.preventDefault()}
               >
-                <i className="nc-icon nc-zoom-split"></i>
+                
+                <NavLink to="/search">
                 <span className="d-lg-block"> Search</span>
+                </NavLink>
               </Nav.Link>
             </Nav.Item>
           </Nav>

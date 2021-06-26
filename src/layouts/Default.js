@@ -16,6 +16,7 @@ function Default() {
         console.log(prop);
         return (
           <Route
+            exact
             path={prop.path}
             render={(props) =>{
               console.log(prop)
