@@ -5,7 +5,7 @@ import { Navbar, Container, Nav, Button, NavDropdown } from "react-bootstrap";
 
 import routes from "../../routes/WelcomeRoutes";
 import AuthService from "services/AuthService";
-import { Lock } from "react-bootstrap-icons";
+import { Lock, Search } from "react-bootstrap-icons";
 
 function Header({ color }) {
   const history = useHistory();
@@ -68,7 +68,6 @@ function Header({ color }) {
                 to="/search"
                 onClick={(e) => e.preventDefault()}
               >
-                
                 <NavLink to="/search">
                 <span className="d-lg-block"> Search</span>
                 </NavLink>

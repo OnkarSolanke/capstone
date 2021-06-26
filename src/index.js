@@ -18,7 +18,7 @@ import AdminLayout from "./layouts/Admin.js";
 import LogInProtector from './protectors/LogInProtector';
 import Vendor from 'layouts/Vendor';
 
-
+console.disableYellowBox = true;
 ReactDOM.render(
   <React.StrictMode>
    <BrowserRouter>
